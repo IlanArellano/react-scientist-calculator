@@ -1,0 +1,40 @@
+
+
+.calculator {
+    width: 50%;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.calculator.light {
+    border: 1px solid rgba(0,0,0,0.5);
+}
+
+.calculator.dark {
+    border: 1px solid rgb(255, 255, 255);
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+@media only screen and (max-width: 480px) {
+    .calculator {
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 400px) {
+    .calculator {
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 340px) {
+    .calculator {
+        width: 80%;
+    }
+}

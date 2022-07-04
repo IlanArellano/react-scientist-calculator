@@ -1,0 +1,48 @@
+
+
+.Input {
+    width: 100%;
+    font-size: 3rem;
+    font-weight: bold;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    padding: 0 3px;
+}
+
+.display {
+    margin: 0 10px;
+    border-radius: 5px;
+    padding: 0 3px;
+}
+
+.display.light {
+    border: 1px solid rgba(0,0,0,0.2);
+}
+
+.display.dark {
+    border: 1px solid rgb(255, 255, 255, 0.5);
+}
+
+.display > span {
+    animation: blink .5s infinite step-end alternate;
+    white-space: no-wrap;
+}
+.display.dark span {
+    border-right: 2px solid #ffffff;
+}
+.display.light span {
+    border-right: 2px solid #000000;
+}
+
+.current {
+    margin: 0 10px;
+    padding: 0 3px;
+    white-space: no-wrap;
+}
+
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
