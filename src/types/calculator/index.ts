@@ -15,6 +15,7 @@ export interface CalculatorProps extends CalculatorPredicate {
   type: CalculatorTypes;
   value?: any;
   display: string;
+  mode: CalculatorMode;
 }
 
 export enum CalculatorTypes {
@@ -23,6 +24,11 @@ export enum CalculatorTypes {
   clear = 3,
   total = 4,
   none = 5,
+}
+
+export enum CalculatorMode {
+  general = 1,
+  scientific = 2
 }
 
 export interface OperatorProps {

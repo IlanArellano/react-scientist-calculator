@@ -7,7 +7,7 @@ function App() {
     <div className="App">
       <Nav />
 
-      <h1>Scientists Calculator!</h1>
+      <h1>Calculator!</h1>
 
       <Calculator />
     </div>

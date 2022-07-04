@@ -4,6 +4,7 @@ import { StoreProps } from "../../types";
 import { setColor } from "../../store/slices";
 import { DarkSVG, LightSVG } from "../svg";
 import { WHITE, colorsArray } from "../../logic";
+import { Switch } from '../switch';
 
 import "./styles.css";
 
@@ -38,14 +39,7 @@ export function Nav() {
       <div className="NavContainer">
         <div className="switchContainer">
           {switchInput ? <LightSVG /> : <DarkSVG />}
-          <label className="switch">
-            <input
-              type="checkbox"
-              onChange={handleChange}
-              checked={switchInput}
-            />
-            <span className="slider round"></span>
-          </label>
+          <Switch checked={switchInput} onChange={handleChange} />
         </div>
       </div>
     </nav>
