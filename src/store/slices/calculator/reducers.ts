@@ -1,4 +1,4 @@
-import { CalculatorStore, ActionType, CalculatorPayload } from "../../../types";
+import { CalculatorStore, ActionType, CalculatorPayload, CalculatorMode } from "../../../types";
 
 const ZERO: string = "0";
 
@@ -10,6 +10,7 @@ export const initial: CalculatorStore = {
     display: null,
     type: null,
   },
+  mode: CalculatorMode.general
 };
 
 export const insert = (state: CalculatorStore, action: ActionType<any>) => {
@@ -34,13 +35,13 @@ export const insert = (state: CalculatorStore, action: ActionType<any>) => {
   };
 };
 
-export const clear = (state: CalculatorStore, action: ActionType<any>) =>
-  initial;
+export const clear = (state: CalculatorStore, action: ActionType<any>) => ({...initial, mode: state.mode});
 
 export const operator = (state: CalculatorStore, action: ActionType<any>) => {
   const obj = action.payload as CalculatorPayload;
 
   return {
+    ...state,
     currentValue: "0",
     prevValue:
       state.currentResult === undefined
@@ -69,3 +70,5 @@ export const total = (state: CalculatorStore, action: ActionType<any>) => ({
   ),
   currenValue: "0",
 });
+
+export const mode = (state: CalculatorStore, action: ActionType<CalculatorMode>) => ({...state, mode: action.payload});

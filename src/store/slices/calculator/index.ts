@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { insert, clear, operator, total, initial } from "./reducers";
+import { insert, clear, operator, total, mode, initial } from "./reducers";
 
 export const InputSlice = createSlice({
   name: "input",
@@ -9,6 +9,7 @@ export const InputSlice = createSlice({
     clear,
     operator,
     total,
+    mode
   },
 });
 
@@ -19,3 +20,5 @@ export const clearInput = InputSlice.actions.clear;
 export const operatorInput = InputSlice.actions.operator;
 
 export const totalInput = InputSlice.actions.total;
+
+export const modeInput = InputSlice.actions.mode;

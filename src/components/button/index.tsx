@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./buttons";
 import { LogicButtons } from "../../logic";
 import {
@@ -7,9 +7,13 @@ import {
   operatorInput,
   totalInput,
 } from "../../store/slices";
-import { CalculatorTypes, CalculatorPayload } from "../../types";
+import { CalculatorTypes, CalculatorPayload, StoreProps, CalculatorStore, CalculatorProps, CalculatorMode } from "../../types";
 
 export function Buttons() {
+
+  const calculator = useSelector<StoreProps, CalculatorStore>(
+    (state) => state.InputSlice
+  );
   const dispatch = useDispatch();
 
   const handleClick = (
@@ -41,9 +45,16 @@ export function Buttons() {
     }
   };
 
+  const mapCondition = (x: CalculatorProps): boolean => {
+    if(calculator.mode === CalculatorMode.general)
+    return x.mode === CalculatorMode.general;
+    
+    return true;
+  }
+
   return (
     <div className="buttons">
-      {LogicButtons.map((x) => (
+      {LogicButtons.filter(mapCondition).map((x) => (
         <Button
           key={x.name}
           onclick={() => handleClick(x.value, x.type, x.display, x.predicate)}

@@ -3,6 +3,7 @@ export interface CalculatorStore {
   prevValue: string | null;
   currentResult: ((num1: number, num2: number) => number) | undefined;
   operator: OperatorProps;
+  mode: CalculatorMode;
 }
 
 export interface CalculatorPredicate {
