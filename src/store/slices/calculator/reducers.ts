@@ -1,4 +1,10 @@
-import { CalculatorStore, ActionType, CalculatorPayload, CalculatorMode } from "../../../types";
+import {
+  CalculatorStore,
+  ActionType,
+  CalculatorPayload,
+  CalculatorMode,
+} from "../../../types";
+import { FinalResult } from "../../../logic";
 
 const ZERO: string = "0";
 
@@ -10,10 +16,13 @@ export const initial: CalculatorStore = {
     display: null,
     type: null,
   },
-  mode: CalculatorMode.general
+  mode: CalculatorMode.general,
 };
 
-export const insert = (state: CalculatorStore, action: ActionType<any>) => {
+export const insert = (
+  state: CalculatorStore,
+  action: ActionType<any>
+): CalculatorStore => {
   if (
     state.currentValue.length > 10 ||
     (String(state.currentValue).includes(".") && String(action.payload) === ".")
@@ -35,23 +44,51 @@ export const insert = (state: CalculatorStore, action: ActionType<any>) => {
   };
 };
 
-export const clear = (state: CalculatorStore, action: ActionType<any>) => ({...initial, mode: state.mode});
+export const clear = (
+  state: CalculatorStore,
+  action: ActionType<any>
+): CalculatorStore => ({
+  ...initial,
+  mode: state.mode,
+});
 
-export const operator = (state: CalculatorStore, action: ActionType<any>) => {
-  const obj = action.payload as CalculatorPayload;
+export const remove = (
+  state: CalculatorStore,
+  action: ActionType<any>
+): CalculatorStore => {
+  if (state.currentValue === undefined || state.currentValue.length === 1)
+    return {
+      ...state,
+      currentValue: ZERO,
+    };
 
   return {
     ...state,
-    currentValue: "0",
+    currentValue: state.currentValue.slice(0, state.currentValue.length - 1),
+  };
+};
+
+export const operator = (
+  state: CalculatorStore,
+  action: ActionType<CalculatorPayload>
+): CalculatorStore => {
+  const obj = action.payload;
+
+  const result =
+    state.currentResult !== undefined
+      ? state.currentResult(
+          parseFloat(state.prevValue ?? ZERO),
+          parseFloat(state.currentValue)
+        )
+      : Number(state.currentValue);
+
+  return {
+    ...state,
+    currentValue: ZERO,
     prevValue:
       state.currentResult === undefined
         ? state.currentValue
-        : String(
-            state.currentResult(
-              parseFloat(state.prevValue ?? "0"),
-              parseFloat(state.currentValue)
-            )
-          ),
+        : FinalResult(result),
     currentResult: obj.predicate,
     operator: {
       display: obj.display,
@@ -60,15 +97,41 @@ export const operator = (state: CalculatorStore, action: ActionType<any>) => {
   };
 };
 
-export const total = (state: CalculatorStore, action: ActionType<any>) => ({
-  ...state,
-  prevValue: String(
-    state.currentResult?.(
-      parseFloat(state.prevValue ?? "0"),
-      parseFloat(state.currentValue)
-    ) ?? state.currentValue
-  ),
-  currenValue: "0",
-});
+export const operatorCurrentValue = (
+  state: CalculatorStore,
+  action: ActionType<CalculatorPayload>
+): CalculatorStore => {
+  if (state.currentValue === ZERO) return state;
 
-export const mode = (state: CalculatorStore, action: ActionType<CalculatorMode>) => ({...state, mode: action.payload});
+  const result: number = action.payload.predicate
+    ? action.payload.predicate(parseFloat(state.currentValue))
+    : Number(state.currentValue);
+
+  return {
+    ...state,
+    currentValue: FinalResult(result),
+  };
+};
+
+export const total = (
+  state: CalculatorStore,
+  action: ActionType<any>
+): CalculatorStore => {
+  const result: number = state.currentResult
+    ? state.currentResult(
+        parseFloat(state.prevValue ?? ZERO),
+        parseFloat(state.currentValue)
+      )
+    : Number(state.currentValue);
+
+  return {
+    ...state,
+    prevValue: FinalResult(result),
+    currentValue: ZERO,
+  };
+};
+
+export const mode = (
+  state: CalculatorStore,
+  action: ActionType<CalculatorMode>
+): CalculatorStore => ({ ...state, mode: action.payload });

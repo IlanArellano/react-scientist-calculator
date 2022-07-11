@@ -7,8 +7,8 @@ export interface CalculatorStore {
 }
 
 export interface CalculatorPredicate {
-  /** La operacion que realizara el boton al hacerle click */
-  predicate?: (num1: number, num2: number) => number;
+  /** La operacion que realizara entre 2 numeros o  el valor actual al hacerle click */
+  predicate?: (num1: number, num2?: number) => number;
 }
 
 export interface CalculatorProps extends CalculatorPredicate {
@@ -25,11 +25,13 @@ export enum CalculatorTypes {
   clear = 3,
   total = 4,
   none = 5,
+  operatorCurrentValue = 6,
+  remove = 7,
 }
 
 export enum CalculatorMode {
   general = 1,
-  scientific = 2
+  scientific = 2,
 }
 
 export interface OperatorProps {
