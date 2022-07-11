@@ -5,8 +5,8 @@ import { Input } from "../input";
 import { StoreProps, CalculatorStore, CalculatorMode } from "../../types";
 import { useSelector, useDispatch } from "react-redux";
 import { displayColor } from "../../logic";
-import { Switch } from '../switch';
-import { modeInput } from '../../store/slices';
+import { Switch } from "../switch";
+import { modeInput } from "../../store/slices";
 
 export function Calculator() {
   const [Scientist, setScientist] = useState<boolean>(false);
@@ -19,12 +19,11 @@ export function Calculator() {
   const divRef = createRef<HTMLDivElement>();
 
   const handleChange = (e: ChangeEvent<any>) => {
-
-    let mode:CalculatorMode = calculator.mode; 
-    if(calculator.mode === CalculatorMode.general) 
-    mode = CalculatorMode.scientific;
-    if(calculator.mode === CalculatorMode.scientific) 
-    mode = CalculatorMode.general;
+    let mode: CalculatorMode = calculator.mode;
+    if (calculator.mode === CalculatorMode.general)
+      mode = CalculatorMode.scientific;
+    if (calculator.mode === CalculatorMode.scientific)
+      mode = CalculatorMode.general;
 
     const isGeneral: boolean = calculator.mode === CalculatorMode.general;
 
@@ -40,14 +39,19 @@ export function Calculator() {
     return () => {
       if (divRef.current) divRef.current.className = "";
     };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [color]);
 
   return (
     <div className="calculator" ref={divRef}>
       <div className="mode">
-        <span>{Scientist ? 'Scientific' : 'Normal'}</span>
-        <Switch size="l" checked={Scientist} onChange={handleChange} />
+        <span>{Scientist ? "Scientific" : "Normal"}</span>
+        <Switch
+          disabled={true}
+          Inputsize="l"
+          checked={Scientist}
+          onChange={handleChange}
+        />
       </div>
       <Input />
       <Buttons />
