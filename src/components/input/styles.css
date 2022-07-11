@@ -54,7 +54,20 @@
     margin: 0 10px;
     padding: 0 3px;
     white-space: no-wrap;
+    overflow-x: scroll;
 }
+
+.current::-webkit-scrollbar {
+    height: 7px;
+}
+
+.current::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+.current::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
 
 
 @keyframes blink {
