@@ -15,7 +15,21 @@
     margin: 0 10px;
     border-radius: 5px;
     padding: 0 3px;
+    overflow-x: scroll;
 }
+
+.display::-webkit-scrollbar {
+    height: 7px;
+}
+
+.display::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+.display::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+  }
+   
 
 .display.light {
     border: 1px solid rgba(0,0,0,0.2);
