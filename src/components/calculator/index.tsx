@@ -6,7 +6,7 @@ import { StoreProps, CalculatorStore, CalculatorMode } from "../../types";
 import { useSelector, useDispatch } from "react-redux";
 import { displayColor } from "../../logic";
 import { Switch } from "../switch";
-import { modeInput } from "../../store/slices";
+import { modeInput, clearInput } from "../../store/slices";
 
 export function Calculator() {
   const [Scientist, setScientist] = useState<boolean>(false);
@@ -28,6 +28,7 @@ export function Calculator() {
     const isGeneral: boolean = calculator.mode === CalculatorMode.general;
 
     dispatch(modeInput(mode));
+    dispatch(clearInput(null));
     setScientist(isGeneral);
   };
 
@@ -47,8 +48,8 @@ export function Calculator() {
       <div className="mode">
         <span>{Scientist ? "Scientific" : "Normal"}</span>
         <Switch
-          disabled={true}
           Inputsize="l"
+          disabled
           checked={Scientist}
           onChange={handleChange}
         />

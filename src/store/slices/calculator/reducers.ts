@@ -3,8 +3,9 @@ import {
   ActionType,
   CalculatorPayload,
   CalculatorMode,
+  CalculatorValues,
 } from "../../../types";
-import { FinalResult } from "../../../logic";
+import { FinalResult, format } from "../../../logic";
 
 const ZERO: string = "0";
 
@@ -19,6 +20,7 @@ export const initial: CalculatorStore = {
   mode: CalculatorMode.general,
 };
 
+//General
 export const insert = (
   state: CalculatorStore,
   action: ActionType<any>
@@ -135,3 +137,32 @@ export const mode = (
   state: CalculatorStore,
   action: ActionType<CalculatorMode>
 ): CalculatorStore => ({ ...state, mode: action.payload });
+
+//Scientific
+export const insertScientific = (
+  state: CalculatorStore,
+  action: ActionType<CalculatorValues>
+) => {
+  let FinalResult = action.payload.alternativeValue ?? action.payload.value;
+
+  if (state.currentValue === ZERO) {
+    if (String(FinalResult)?.startsWith(ZERO))
+      return { ...state, currentValue: ZERO };
+    if (String(FinalResult)?.startsWith("."))
+      return { ...state, currentValue: `${ZERO}.` };
+
+    return { ...state, currentValue: FinalResult };
+  }
+
+  return {
+    ...state,
+    currentValue: `${state.currentValue}${FinalResult}`,
+  };
+};
+
+export const operatorCurrentValueScientific = (
+  state: CalculatorStore,
+  action: ActionType<any>
+) => {
+  return state;
+};

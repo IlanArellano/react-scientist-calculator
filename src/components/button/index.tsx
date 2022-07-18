@@ -8,6 +8,8 @@ import {
   totalInput,
   removeInput,
   operatorCurrentValueInput,
+  insertScientificInput,
+  operatorCurrentValueScientificInput,
 } from "../../store/slices";
 import {
   CalculatorTypes,
@@ -16,6 +18,7 @@ import {
   CalculatorStore,
   CalculatorProps,
   CalculatorMode,
+  CalculatorValues,
 } from "../../types";
 
 export function Buttons() {
@@ -25,23 +28,44 @@ export function Buttons() {
 
   const dispatch = useDispatch();
 
-  const handleClick = (
-    value: any,
-    type: CalculatorTypes,
-    name: string,
-    predicate?: (num1: number, num2?: number) => number
-  ) => {
-    switch (type) {
+  const handleClick = (x: CalculatorProps) => {
+    if (calculator.mode === CalculatorMode.scientific) {
+      switch (x.type) {
+        case CalculatorTypes.none:
+          break;
+        case CalculatorTypes.clear:
+          dispatch(clearInput(null));
+          break;
+        case CalculatorTypes.total:
+          break;
+        case CalculatorTypes.remove:
+          dispatch(removeInput(null));
+          break;
+        case CalculatorTypes.operatorCurrentValue:
+          dispatch(operatorCurrentValueScientificInput(x.alternativeValue));
+          break;
+        default:
+          const obj: CalculatorValues = {
+            value: x.value,
+            alternativeValue: x.alternativeValue,
+          };
+          dispatch(insertScientificInput(obj));
+          break;
+      }
+      return;
+    }
+
+    switch (x.type) {
       case CalculatorTypes.display:
-        dispatch(insertInput(value ?? 0));
+        dispatch(insertInput(x.value ?? 0));
         break;
       case CalculatorTypes.clear:
         dispatch(clearInput(null));
         break;
       case CalculatorTypes.operator:
         const obj1: CalculatorPayload = {
-          predicate,
-          display: name,
+          predicate: x.predicate,
+          display: x.display,
           type: null,
         };
         dispatch(operatorInput(obj1));
@@ -54,8 +78,8 @@ export function Buttons() {
         break;
       case CalculatorTypes.operatorCurrentValue:
         const obj2: CalculatorPayload = {
-          predicate,
-          display: name,
+          predicate: x.predicate,
+          display: x.display,
           type: null,
         };
         dispatch(operatorCurrentValueInput(obj2));
@@ -79,10 +103,7 @@ export function Buttons() {
       }`}
     >
       {LogicButtons.filter(mapCondition).map((x) => (
-        <Button
-          key={x.name}
-          onclick={() => handleClick(x.value, x.type, x.display, x.predicate)}
-        >
+        <Button key={x.name} onclick={() => handleClick(x)}>
           {x.display}
         </Button>
       ))}

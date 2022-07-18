@@ -6,15 +6,19 @@ export interface CalculatorStore {
   mode: CalculatorMode;
 }
 
+export interface CalculatorValues {
+  value?: any;
+  alternativeValue?: any;
+}
+
 export interface CalculatorPredicate {
   /** La operacion que realizara entre 2 numeros o  el valor actual al hacerle click */
   predicate?: (num1: number, num2?: number) => number;
 }
 
-export interface CalculatorProps extends CalculatorPredicate {
+export interface CalculatorProps extends CalculatorPredicate, CalculatorValues {
   name: string;
   type: CalculatorTypes;
-  value?: any;
   display: string;
   mode: CalculatorMode;
 }

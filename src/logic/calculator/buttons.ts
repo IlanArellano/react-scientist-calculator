@@ -1,9 +1,10 @@
 import { CalculatorProps, CalculatorTypes, CalculatorMode } from "../../types";
+import { factorial } from "../../logic";
 
 export const LogicButtons: CalculatorProps[] = [
   {
     name: "second",
-    display: "2nd",
+    display: "",
     type: CalculatorTypes.none,
     mode: CalculatorMode.scientific,
   },
@@ -13,6 +14,7 @@ export const LogicButtons: CalculatorProps[] = [
     value: Math.PI,
     type: CalculatorTypes.display,
     mode: CalculatorMode.general,
+    alternativeValue: Math.PI.toFixed(2),
   },
   {
     name: "e",
@@ -20,6 +22,7 @@ export const LogicButtons: CalculatorProps[] = [
     value: Math.E,
     type: CalculatorTypes.display,
     mode: CalculatorMode.general,
+    alternativeValue: Math.E.toFixed(2),
   },
   {
     name: "clear",
@@ -39,6 +42,7 @@ export const LogicButtons: CalculatorProps[] = [
     type: CalculatorTypes.operatorCurrentValue,
     predicate: (num) => num ** 2,
     mode: CalculatorMode.general,
+    alternativeValue: "{0}^2",
   },
   {
     name: "intrinsic",
@@ -46,24 +50,28 @@ export const LogicButtons: CalculatorProps[] = [
     type: CalculatorTypes.operatorCurrentValue,
     predicate: (num) => 1 / num,
     mode: CalculatorMode.general,
+    alternativeValue: "1/{0}",
   },
   {
     name: "absulute",
     display: "|x|",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.operatorCurrentValue,
     mode: CalculatorMode.scientific,
+    alternativeValue: "|{0}|",
   },
   {
     name: "scientist_totation",
     display: "exp",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.operatorCurrentValue,
     mode: CalculatorMode.scientific,
+    alternativeValue: "exp({0})",
   },
   {
     name: "mod",
     display: "mod",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.operatorCurrentValue,
     mode: CalculatorMode.scientific,
+    alternativeValue: "{0}mod({1})",
   },
   {
     name: "sqrt",
@@ -71,24 +79,29 @@ export const LogicButtons: CalculatorProps[] = [
     type: CalculatorTypes.operatorCurrentValue,
     predicate: (num) => Math.sqrt(num),
     mode: CalculatorMode.general,
+    alternativeValue: "sqrt({0})",
   },
   {
     name: "left_parent",
     display: "(",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.operatorCurrentValue,
     mode: CalculatorMode.scientific,
+    value: "(",
   },
   {
     name: "right_parent",
     display: ")",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.display,
     mode: CalculatorMode.scientific,
+    value: ")",
   },
   {
     name: "factorial",
     display: "n!",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.operatorCurrentValue,
     mode: CalculatorMode.scientific,
+    alternativeValue: "{0}!",
+    predicate: (num) => factorial(num),
   },
   {
     name: "division",
@@ -96,12 +109,15 @@ export const LogicButtons: CalculatorProps[] = [
     type: CalculatorTypes.operator,
     predicate: (num1, num2) => num1 / (num2 ?? 0),
     mode: CalculatorMode.general,
+    value: "/",
   },
   {
     name: "pow",
     display: "x^y",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.display,
     mode: CalculatorMode.scientific,
+    alternativeValue: "({0}^{1})",
+    predicate: (num1, num2) => num1 ** (num2 ?? 0),
   },
   {
     name: "seven",
@@ -130,12 +146,15 @@ export const LogicButtons: CalculatorProps[] = [
     type: CalculatorTypes.operator,
     predicate: (num1, num2) => num1 * (num2 ?? 0),
     mode: CalculatorMode.general,
+    value: "x",
   },
   {
     name: "_10pow",
     display: "10^x",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.display,
     mode: CalculatorMode.scientific,
+    alternativeValue: "10^{0}",
+    predicate: (num) => 10 ** num,
   },
   {
     name: "four",
@@ -164,12 +183,15 @@ export const LogicButtons: CalculatorProps[] = [
     type: CalculatorTypes.operator,
     predicate: (num1, num2) => num1 - (num2 ?? 0),
     mode: CalculatorMode.general,
+    value: "-",
   },
   {
     name: "log",
     display: "log",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.display,
     mode: CalculatorMode.scientific,
+    alternativeValue: "log({0})",
+    predicate: (num) => Math.log10(num),
   },
   {
     name: "one",
@@ -198,18 +220,22 @@ export const LogicButtons: CalculatorProps[] = [
     type: CalculatorTypes.operator,
     predicate: (num1, num2) => num1 + (num2 ?? 0),
     mode: CalculatorMode.general,
+    value: "+",
   },
   {
     name: "ln",
     display: "ln",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.display,
     mode: CalculatorMode.scientific,
+    alternativeValue: "ln({0})",
+    predicate: (num) => Math.log(num),
   },
   {
     name: "sum_rest",
     display: "+/-",
-    type: CalculatorTypes.none,
+    type: CalculatorTypes.display,
     mode: CalculatorMode.general,
+    alternativeValue: "-{0}",
   },
   {
     name: "zero",

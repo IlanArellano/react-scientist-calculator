@@ -7,6 +7,8 @@ import {
   remove,
   mode,
   operatorCurrentValue,
+  insertScientific,
+  operatorCurrentValueScientific,
   initial,
 } from "./reducers";
 
@@ -21,6 +23,8 @@ export const InputSlice = createSlice({
     mode,
     remove,
     operatorCurrentValue,
+    insertScientific,
+    operatorCurrentValueScientific,
   },
 });
 
@@ -38,3 +42,8 @@ export const removeInput = InputSlice.actions.remove;
 
 export const operatorCurrentValueInput =
   InputSlice.actions.operatorCurrentValue;
+
+export const insertScientificInput = InputSlice.actions.insertScientific;
+
+export const operatorCurrentValueScientificInput =
+  InputSlice.actions.operatorCurrentValueScientific;
